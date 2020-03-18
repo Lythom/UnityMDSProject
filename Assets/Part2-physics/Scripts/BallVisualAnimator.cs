@@ -23,11 +23,5 @@ namespace Part2
             animator.animationSpeed = amplitude * animtionSpeedRatio;
             body.rotation = Mathf.Rad2Deg * Mathf.Atan2(vitesse.y, vitesse.x);
         }
-
-        void OnCollisionEnter2D(Collision2D col)
-        {
-            transform.localScale *= 1.1f;
-            Debug.Log("hop !");
-        }
     }
 }

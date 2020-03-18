@@ -6,6 +6,11 @@ namespace Part2
     [RequireComponent(typeof(SpriteRenderer), typeof(SpritesheetAnimator), typeof(Rigidbody2D))]
     public class MoveCharacter : MonoBehaviour
     {
+        public enum PlayerControls
+        {
+            ZQSDF,
+            ArrowAnd0
+        }
         private const string ROLL = "roll";
 
         [Tooltip("Speed in Unit per second")] public float speed = 5f;
@@ -14,10 +19,11 @@ namespace Part2
         private SpritesheetAnimator animator;
         private Rigidbody2D body;
 
+        public PlayerControls controls = PlayerControls.ArrowAnd0;
+
         // COOLDOWNS
         [Tooltip("Cooldown of a roll in seconds")]
         public float rollCooldownDuration = 1;
-
         private float rollCooldown = 0;
 
         void Start()
@@ -31,29 +37,34 @@ namespace Part2
         void Update()
         {
             Vector2 vitesse = Vector2.zero;
-            if (Input.GetKey(KeyCode.UpArrow))
+            if (Input.GetKey(KeyCode.UpArrow) && controls == PlayerControls.ArrowAnd0
+            || Input.GetKey(KeyCode.Z) && controls == PlayerControls.ZQSDF)
             {
                 vitesse += Vector2.up;
             }
 
-            if (Input.GetKey(KeyCode.DownArrow))
+            if (Input.GetKey(KeyCode.DownArrow) && controls == PlayerControls.ArrowAnd0
+            || Input.GetKey(KeyCode.S) && controls == PlayerControls.ZQSDF)
             {
                 vitesse += Vector2.down;
             }
 
-            if (Input.GetKey(KeyCode.LeftArrow))
+            if (Input.GetKey(KeyCode.LeftArrow) && controls == PlayerControls.ArrowAnd0
+            || Input.GetKey(KeyCode.Q) && controls == PlayerControls.ZQSDF)
             {
                 vitesse += Vector2.left;
                 spriteRenderer.flipX = true;
             }
 
-            if (Input.GetKey(KeyCode.RightArrow))
+            if (Input.GetKey(KeyCode.RightArrow) && controls == PlayerControls.ArrowAnd0
+            || Input.GetKey(KeyCode.D) && controls == PlayerControls.ZQSDF)
             {
                 vitesse += Vector2.right;
                 spriteRenderer.flipX = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && rollCooldown <= 0)
+            if ((Input.GetKeyDown(KeyCode.Keypad0) && controls == PlayerControls.ArrowAnd0
+            || Input.GetKey(KeyCode.F) && controls == PlayerControls.ZQSDF) && rollCooldown <= 0)
             {
                 animator.Play(Anims.Roll);
                 rollCooldown = rollCooldownDuration;
@@ -70,7 +81,7 @@ namespace Part2
                     animator.Play(Anims.Iddle);
                 }
             }
-    
+
             body.velocity = vitesse.normalized * speed;
 
             rollCooldown -= Time.deltaTime;
