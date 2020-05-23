@@ -1,8 +1,0 @@
-1. Ajouter le ballon
-2. Ajouter les éléments de physique au personnage et au ballon
-3. Modifier les scripts pour que le personnage pousse le ballon
-
-4. Animer le sprite du ballon
-5. Ajouter des limites au terrain
-6. Ouvrir des buts
-7. 

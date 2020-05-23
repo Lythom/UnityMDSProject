@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -151,6 +152,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -252,6 +254,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -429,6 +432,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -504,7 +508,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 2
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -543,11 +547,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 867705259}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee4c9ad4d45c9164abfa9d64c6dd78ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f6a6b88f3edeca41b5e4319eb0ec707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tracked: {fileID: 1789404910}
-  stiffness: 5
+  stiffness: 1
+  offset: {x: 0, y: 0, z: -10}
 --- !u!1 &1534514101
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,6 +631,7 @@ GameObject:
   - component: {fileID: 1789404909}
   - component: {fileID: 1789404911}
   - component: {fileID: 1789404908}
+  - component: {fileID: 1789404912}
   m_Layer: 0
   m_Name: girl-2_0
   m_TagString: Untagged
@@ -642,29 +648,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1789404907}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57c45ace9547cdf458c579683f6195b4, type: 3}
+  m_Script: {fileID: 11500000, guid: e48be720c4fe0b943bfd2cb816ed485b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationSpeed: 12
-  iddle:
-  - {fileID: -7534814588082588449, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
-  - {fileID: -8908505173890310732, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
-  - {fileID: 2867139976888687431, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
-  - {fileID: -5709086882050283234, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
-  - {fileID: -1370921465101214804, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
-  run:
-  - {fileID: 4431311954750922753, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
-  - {fileID: -1537421284121854877, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
-  - {fileID: -926713556074230613, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
-  - {fileID: -1684448031922152470, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
-  - {fileID: 357513123220955769, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
-  - {fileID: 5029711492617055924, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
-  roll:
-  - {fileID: -2989388456014745137, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
-  - {fileID: -8602678959190746492, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
-  - {fileID: -6638034360933449799, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
-  - {fileID: -4500279932792534462, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
-  - {fileID: -3921309436060209825, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+  speed: 5
+  controls: 1
+  rollCooldownDuration: 1
 --- !u!212 &1789404909
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -679,6 +668,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -738,8 +728,51 @@ MonoBehaviour:
   m_GameObject: {fileID: 1789404907}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f4374be006ef334d9413d0b3f51817a, type: 3}
+  m_Script: {fileID: 11500000, guid: b780c528507ba304b93513755a827202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  rollCooldownDuration: 1
+  animationSpeed: 12
+  animations:
+  - name: 0
+    frames:
+    - {fileID: -7534814588082588449, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+    - {fileID: -8908505173890310732, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+    - {fileID: 2867139976888687431, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+    - {fileID: -5709086882050283234, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+    - {fileID: -1370921465101214804, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+  - name: 1
+    frames:
+    - {fileID: 4431311954750922753, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+    - {fileID: -1537421284121854877, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+    - {fileID: -926713556074230613, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+    - {fileID: -1684448031922152470, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+    - {fileID: 357513123220955769, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+    - {fileID: 5029711492617055924, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+  - name: 2
+    frames:
+    - {fileID: -2989388456014745137, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+    - {fileID: -8602678959190746492, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+    - {fileID: -6638034360933449799, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+    - {fileID: -4500279932792534462, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+    - {fileID: -3921309436060209825, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+--- !u!50 &1789404912
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789404907}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
