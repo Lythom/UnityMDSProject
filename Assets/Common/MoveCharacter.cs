@@ -8,6 +8,12 @@ public class MoveCharacter : MonoBehaviour {
         ZQSDF,
         ArrowAnd0
     }
+
+    public float ShootStrength = 5;
+
+    public GameObject ShootFX;
+    public ParticleSystem DustWalkFX;
+    public float DustAmount = 10;
     private const string ROLL = "roll";
 
     [Tooltip("Speed in Unit per second")] public float speed = 5f;
@@ -23,10 +29,23 @@ public class MoveCharacter : MonoBehaviour {
     public float rollCooldownDuration = 1;
     private float rollCooldown = 0;
 
+    private float controlLevel = 1; // 0 no control, 1=full control
+    public float ControlRecoverySpeed = 3;
+
     void Start() {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<SpritesheetAnimator>();
         body = GetComponent<Rigidbody2D>();
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (other.rigidbody.bodyType == RigidbodyType2D.Dynamic) {
+            if (this.animator.CurrentAnimation.name == Anims.Roll) {
+                other.rigidbody.AddForce(-other.GetContact(0).normal * ShootStrength, ForceMode2D.Impulse);
+                Instantiate(ShootFX, other.GetContact(0).point, Quaternion.identity);
+            }
+        }
+        controlLevel = 0;
     }
 
     // Update is called once per frame
@@ -68,7 +87,10 @@ public class MoveCharacter : MonoBehaviour {
             }
         }
 
-        body.velocity = vitesse.normalized * speed;
+        controlLevel = Mathf.Clamp01(controlLevel + Time.deltaTime * ControlRecoverySpeed);
+        body.velocity = Vector2.Lerp(body.velocity, vitesse.normalized * speed, (controlLevel < 0.05f) ? 0.05f : Mathf.Pow(2, 10 * (controlLevel - 1)));
+        var emission = DustWalkFX.emission;
+        emission.rateOverTime = vitesse.magnitude * DustAmount;
 
         rollCooldown -= Time.deltaTime;
     }
