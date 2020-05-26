@@ -27,19 +27,6 @@ public class MoveCharacter : MonoBehaviour {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<SpritesheetAnimator>();
         body = GetComponent<Rigidbody2D>();
-
-        IEnumerable<Transform> children = (IEnumerable<Transform>) this.transform;
-        foreach (Transform child in children) {
-            child.gameObject.GetComponent<SpriteRenderer>(); // peut être null !
-        }
-        // méthode 2
-        foreach (Transform child in this.transform) {
-            child.gameObject.GetComponent<SpriteRenderer>(); // peut être null !
-        }
-        // méthode 3
-        foreach (SpriteRenderer script in this.GetComponentsInChildren<SpriteRenderer>()) {
-            // script n'est pas null
-        }
     }
 
     // Update is called once per frame
